@@ -34,11 +34,11 @@ app.get('/api/notes/:id', (request, response, next) => {
             response.status(404).end()
         }
     })
-    .catch(error => next(error))
+        .catch(error => next(error))
 })
 
-app.delete('/api/notes/:id', (request, response) => {
-    Note.findByIdAndDelete(request.params.id)
+app.delete('/api/notes/:id', (req, res, next) => {
+    Note.findByIdAndDelete(req.params.id)
         .then(res => {
             res.status(204).end()
         })
@@ -66,7 +66,7 @@ app.put('/api/notes/:id', (req, res, next) => {
     Note.findById(req.params.id)
         .then(note => {
             if (!note) {
-                return response.status(404).end()
+                return res.status(404).end()
             }
 
             note.content = content
